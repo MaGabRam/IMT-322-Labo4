@@ -24,8 +24,8 @@ __error__(char *pcFilename, uint32_t ui32Line)
 //
 // Programa principal
 //
-uint32_t loadValue = 120000000*5;
-void timer0A_handler(void);
+uint32_t loadValue = 120000000*5;  //modificar el tiempo en el que se ejecuta el timer, aqui es de 5 seg
+void timer0A_handler(void); //void para que se ejecute cada cierto tiempo
 uint8_t switch_state = 0;
 uint32_t button = 0;
 
@@ -45,24 +45,28 @@ int main(void)
     GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
    
     //Enable Timer Peripheral
+    //esto es de la guia para habilitar el timer 
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1);
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0)) { }
 
     //Set timer
+    //modificando el timer 0 de tipo periodico
     TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
 
     //Set the cout time for Timer
+    //del timer 0 de l puerto a, la carrga estaria configurada conforme al tiempo o load_value
     TimerLoadSet(TIMER0_BASE, TIMER_A, loadValue);
 
     //Enable processor interrupts
+    //habilita interrupciones porque asi estaba en la guia, no se usa
     IntMasterEnable();
 
     //Enable Interrupt
     IntEnable(35);
 
     //Enable timer A interrupt
-    TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+    TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);//tomeotu para iniciar en 2 seg y cuando llega a 0 , F, osea tiempo fuer como temproizador 
 
     //Enable the timer
     TimerEnable(TIMER0_BASE, TIMER_A);
