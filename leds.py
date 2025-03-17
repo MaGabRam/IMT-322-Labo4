@@ -8,9 +8,9 @@ GPIO.setwarnings(False)
 archivo = "texto_proob2.txt"
 
 def read_interval():
-    with open(archivo, "r") as file:
-        interval = float(file.readline().strip())
-        return max(0.1, interval)
+    with open(archivo, "r") as file: # se cierre o no el archivo, se quedara con el ultimo numero que se ponga en el texto, por lo que se lo tomara en cuenta
+        interval = float(file.readline().strip()) #primera linea del archivo
+        return max(0.1, interval) #para que no sea tan pequena el tiempo de intervalo, igual se va a 0.1
 
 try:
     while True:
